@@ -1,35 +1,3 @@
-# DEG Project Challenges
-
-This repository contains the DEG training project challenges across multiple tracks:
-
-- Backend
-- Data Engineering
-- Fullstack
-- QA
-- DevOps
-
-Each challenge is self-contained inside its folder and includes its own README with task details.
-
-## Applicant Guide
-
-If you are applying, start by choosing the challenge folder that matches your track or assigned task. Then open the README inside that folder.
-
-The challenge-specific README files include:
-
-- Challenge description and requirements
-- Expected deliverables
-- Submission guidelines and deadlines (where applicable)
-- Any setup instructions or constraints
-
-## Where To Start
-
-1. Open the relevant track folder (for example, `backend/`, `data-engineering/`, or `fullstack/`).
-2. Enter the challenge project folder.
-3. Read that project's `README.md` completely before starting work.
-4. Follow the listed deliverables and submission instructions exactly.
-
-If instructions differ between this root README and a challenge README, treat the challenge README as the source of truth.
-=======
 # SecureVault Dashboard
 
 A modern file explorer UI built for SecureVault Inc. — an enterprise cloud storage platform used by law firms and financial institutions. The goal was to replace a flat, hard-to-navigate file list with a fast, keyboard-accessible, deeply nestable file explorer that feels secure and professional.
@@ -38,13 +6,13 @@ A modern file explorer UI built for SecureVault Inc. — an enterprise cloud sto
 
 ## Live Demo
 
-[View deployed app](https://securevault-dashboard.vercel.app)
+[View deployed app](https://ornate-froyo-a0e4eb.netlify.app/)
 
 ---
 
 ## Design File
 
-[Figma — SecureVault Design System](https://www.figma.com/your-link-here)
+[Figma — SecureVault Design System](https://www.figma.com/design/nCV2Nc9vHQ2qWssEAiKXoY/SecureVault-dashboard?node-id=0-1&t=WEIoavf0NHRYxe8z-1)
 
 The design file includes a dedicated Design System page with:
 - Typography scale (Inter, 4 sizes)
@@ -58,13 +26,13 @@ The design file includes a dedicated Design System page with:
 ## Setup
 
 ```bash
-git clone https://github.com/your-username/securevault-dashboard.git
+git clone https://github.com/EmeranceU/AmaliTech-DEG-Project-based-challenges
 cd securevault-dashboard
 npm install
 npm run dev
 ```
 
-The app runs on `http://localhost:5173` by default.
+The app runs on `http://localhost:5174` by default.
 
 To build for production:
 
@@ -155,4 +123,3 @@ src/
 - [x] Enter selects the focused node
 - [x] Wildcard feature implemented (Breadcrumb navigation)
 - [x] Bonus feature implemented (Search with auto-expand)
->>>>>>> 411c0b5 (setup instructions, recursive strategy explanation, wildcard feature docs)
