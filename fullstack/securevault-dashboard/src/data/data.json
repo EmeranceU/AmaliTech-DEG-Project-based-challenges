@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "name": "Documents",
+    "type": "folder",
+    "modified": "Jun 28, 2025",
+    "children": [
+      {
+        "id": 2,
+        "name": "Work",
+        "type": "folder",
+        "modified": "Jun 27, 2025",
+        "children": [
+          { "id": 3, "name": "Report_Q1.pdf",  "type": "pdf", "size": "2.4 MB", "modified": "Jun 26, 2025" },
+          { "id": 4, "name": "Contract.docx",  "type": "doc", "size": "540 KB", "modified": "Jun 25, 2025" }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Personal",
+        "type": "folder",
+        "modified": "Jun 20, 2025",
+        "children": [
+          { "id": 6, "name": "Budget_2025.xlsx", "type": "doc", "size": "128 KB", "modified": "Jun 19, 2025" },
+          { "id": 7, "name": "Notes.txt",         "type": "txt", "size": "12 KB",  "modified": "Jun 18, 2025" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Images",
+    "type": "folder",
+    "modified": "Jun 22, 2025",
+    "children": [
+      { "id": 9,  "name": "screenshot.png", "type": "image", "size": "1.1 MB", "modified": "Jun 21, 2025" },
+      { "id": 10, "name": "avatar.jpg",     "type": "image", "size": "320 KB", "modified": "Jun 20, 2025" },
+      {
+        "id": 11,
+        "name": "Wallpapers",
+        "type": "folder",
+        "modified": "Jun 15, 2025",
+        "children": [
+          { "id": 12, "name": "mountain.jpg", "type": "image", "size": "3.8 MB", "modified": "Jun 14, 2025" },
+          { "id": 13, "name": "ocean.png",    "type": "image", "size": "2.2 MB", "modified": "Jun 13, 2025" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Vault",
+    "type": "folder",
+    "modified": "Jun 10, 2025",
+    "children": [
+      { "id": 15, "name": "keys.enc",   "type": "locked", "size": "4 KB",   "modified": "Jun 10, 2025" },
+      { "id": 16, "name": "backup.enc", "type": "locked", "size": "8.7 MB", "modified": "Jun 09, 2025" }
+    ]
+  },
+  { "id": 17, "name": "readme.txt", "type": "txt", "size": "6 KB", "modified": "Jun 01, 2025" }
+]
