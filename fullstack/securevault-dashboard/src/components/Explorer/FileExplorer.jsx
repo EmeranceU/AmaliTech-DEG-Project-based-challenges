@@ -72,7 +72,7 @@ function TreeNode({ node, depth = 0, selected, onSelect, openIds, onToggle, focu
               className={`text-gray-600 transition-transform duration-150 shrink-0 ${isOpen ? "rotate-90" : ""}`}
             />
             {isOpen
-              ? <FolderOpen size={14} className="text-emerald-400 shrink-0" />
+              ? <FolderOpen size={14} className="text-pink-400 shrink-0" />
               : <Folder     size={14} className="text-emerald-500/70 shrink-0" />
             }
           </>
@@ -101,18 +101,10 @@ function TreeNode({ node, depth = 0, selected, onSelect, openIds, onToggle, focu
 }
 
 const navItems = [
-  { id: "nav-dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { id: "nav-allfiles",  icon: HardDrive,       label: "All Files" },
-  { id: "nav-shared",    icon: Share2,          label: "Shared"    },
-  { id: "nav-recent",    icon: Clock,           label: "Recent"    },
-  { id: "nav-trash",     icon: Trash2,          label: "Trash"     },
+  { id: "nav-allfiles", icon: HardDrive, label: "All Files" },
 ];
 
-const categories = [
-  { id: "cat-documents", icon: FileText,      label: "Documents", count: 12, color: "text-blue-400"   },
-  { id: "cat-images",    icon: ImageIcon,     label: "Images",    count: 8,  color: "text-sky-400"    },
-  { id: "cat-projects",  icon: ProjectsIcon,  label: "Projects",  count: 3,  color: "text-violet-400" },
-];
+
 
 export default function FileExplorer({ selected, onSelect, matchedIds, expandIds }) {
   const [openIds,      setOpenIds]      = useState(new Set());
@@ -138,7 +130,6 @@ export default function FileExplorer({ selected, onSelect, matchedIds, expandIds
 
   const allItems = [
     ...navItems.map(({ id, label }) => ({ id, name: label, type: "nav" })),
-    ...categories.map(({ id, label }) => ({ id, name: label, type: "category" })),
     ...treeNodes,
   ];
 
@@ -203,7 +194,7 @@ export default function FileExplorer({ selected, onSelect, matchedIds, expandIds
       <div className="flex-1 px-3 py-4 flex flex-col gap-5">
         <div>
           <p className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest mb-1.5 px-2">
-            Menu
+            Explorer
           </p>
           <div className="flex flex-col gap-0.5">
             {navItems.map(({ id, icon: Icon, label }) => {
@@ -228,78 +219,29 @@ export default function FileExplorer({ selected, onSelect, matchedIds, expandIds
                 </button>
               );
             })}
-          </div>
-        </div>
 
-        <div>
-          <p className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest mb-1.5 px-2">
-            Categories
-          </p>
-          <div className="flex flex-col gap-0.5">
-            {categories.map(({ id, icon: Icon, label, count, color }) => {
-              const isActive  = selected?.id === id;
-              const isFocused = focusedId === id;
-              return (
-                <button
-                  key={id}
-                  ref={(el) => { if (el) nodeRefs.current[id] = el; }}
-                  onClick={() => onSelect({ id, name: label, type: "category" })}
-                  className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-xs transition-all duration-150 outline-none ${
-                    isFocused
-                      ? "bg-sky-500/10 text-sky-300 border border-sky-500/30"
-                      : isActive
-                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                      : "text-gray-500 hover:bg-white/[0.04] hover:text-gray-300 border border-transparent"
-                  }`}
-                >
-                  <Icon size={14} className={`shrink-0 ${isFocused ? "text-sky-300" : isActive ? "text-emerald-400" : color}`} />
-                  <span className="font-medium">{label}</span>
-                  <span className="ml-auto text-[10px] text-gray-600 bg-white/5 px-1.5 py-0.5 rounded-md">
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div>
-          <p className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest mb-1.5 px-2">
-            File Tree
-          </p>
-          <div className="flex flex-col gap-0.5">
-            {tree.map((node) => (
-              <TreeNode
-                key={node.id}
-                node={node}
-                selected={selected}
-                onSelect={onSelect}
-                openIds={effectiveOpenIds}
-                onToggle={toggleOpen}
-                focusedId={focusedId}
-                nodeRefs={nodeRefs}
-                matchedIds={matchedIds}
-              />
-            ))}
+            <div className="mt-2">
+              <div className="flex flex-col gap-0.5">
+                {tree.map((node) => (
+                  <TreeNode
+                    key={node.id}
+                    node={node}
+                    selected={selected}
+                    onSelect={onSelect}
+                    openIds={effectiveOpenIds}
+                    onToggle={toggleOpen}
+                    focusedId={focusedId}
+                    nodeRefs={nodeRefs}
+                    matchedIds={matchedIds}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="px-3 py-4 border-t border-white/[0.06]">
-        <div className="bg-[#161b22] rounded-xl p-3 border border-white/[0.06]">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-gray-300">Storage</span>
-            <span className="text-[10px] text-emerald-400 font-semibold">82%</span>
-          </div>
-          <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mb-2">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400"
-              style={{ width: "82%" }}
-            />
-          </div>
-          <p className="text-[10px] text-gray-600">41.2 GB of 50 GB used</p>
-        </div>
-      </div>
+      
     </aside>
   );
 }
