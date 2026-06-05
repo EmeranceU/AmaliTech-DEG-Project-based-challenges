@@ -6,7 +6,7 @@ A modern file explorer UI built for SecureVault Inc. — an enterprise cloud sto
 
 ## Live Demo
 
-[View deployed app](https://ornate-froyo-a0e4eb.netlify.app/)
+[View deployed app](https://gleaming-kangaroo-a761ce.netlify.app/)
 
 ---
 
