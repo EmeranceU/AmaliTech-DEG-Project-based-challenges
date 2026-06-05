@@ -3,11 +3,10 @@ import Toolbar from "./components/Toolbar/Toolbar";
 import FileExplorer from "./components/Explorer/FileExplorer";
 import PropertiesPanel from "./components/PropertiesPanel/PropertiesPanel";
 import Breadcrumb from "./components/Breadcrumb/Breadcrumb";
-import { findPath } from "./utils/findPath";
+import { findPath } from "./hooks/utils/findPath";
 import { useSearch } from "./hooks/useSearch";
 import {
   FileText, FileLock2, FileImage, FileType2, Folder,
-  LayoutGrid, List, SlidersHorizontal, AlertTriangle,
   RefreshCw, Sparkles, MoreHorizontal, Download, Share2, Search, X,
 } from "lucide-react";
 import tree from "./data/data.json";
@@ -43,62 +42,7 @@ const resolveItems = (selected) => {
   return [selected];
 };
 
-const dashboardCards = [
-  {
-    icon: Sparkles,
-    color: "text-violet-400",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/20",
-    title: "Suggested",
-    subtitle: "Project Proposal.pdf",
-    tag: "New",
-    tagColor: "bg-violet-500/10 text-violet-400",
-  },
-  {
-    icon: RefreshCw,
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
-    title: "Recent Sync",
-    subtitle: "4 files updated",
-    tag: "Just now",
-    tagColor: "bg-emerald-500/10 text-emerald-400",
-  },
-  {
-    icon: AlertTriangle,
-    color: "text-red-400",
-    bg: "bg-red-500/10",
-    border: "border-red-500/20",
-    title: "Security Alert",
-    subtitle: "2 suspicious logins",
-    tag: "Action needed",
-    tagColor: "bg-red-500/10 text-red-400",
-  },
-];
-
-function DashboardCards() {
-  return (
-    <div className="grid grid-cols-3 gap-3 mb-6">
-      {dashboardCards.map(({ icon: Icon, color, bg, border, title, subtitle, tag, tagColor }) => (
-        <div
-          key={title}
-          className={`bg-[#161b22] rounded-xl border ${border} p-4 flex gap-3 items-start hover:bg-[#1c2128] transition-all duration-150 cursor-pointer`}
-        >
-          <div className={`${bg} p-2 rounded-lg shrink-0`}>
-            <Icon size={15} className={color} />
-          </div>
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-white">{title}</p>
-            <p className="text-[11px] text-gray-500 truncate mt-0.5">{subtitle}</p>
-            <span className={`inline-block mt-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${tagColor}`}>
-              {tag}
-            </span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+// Dashboard cards removed to keep UI focused on core file-explorer features
 
 function FileTable({ items, onSelect, selected }) {
   return (
@@ -199,13 +143,13 @@ function flattenAll(nodes) {
 }
 
 function MainContent({ selected, onSelect, query, setQuery, matchedIds }) {
-  const [view, setView] = useState("list");
-  const path = selected && !query ? findPath(tree, selected.id) : null;
+  const path = selected && selected.type !== "nav" && selected.type !== "category" ? findPath(tree, selected.id) : null;
 
   const items = useMemo(() => {
     if (query && matchedIds) {
       return flattenAll(tree).filter((n) => matchedIds.has(n.id));
     }
+
     return resolveItems(selected);
   }, [query, matchedIds, selected]);
 
@@ -220,7 +164,7 @@ function MainContent({ selected, onSelect, query, setQuery, matchedIds }) {
           ) : (
             <>
               <h1 className="text-base font-semibold text-white">
-                {query ? `Results for "${query}"` : selected?.name ?? "All Files"}
+                {selected?.name ?? "All Files"}
               </h1>
               <p className="text-xs text-gray-600 mt-0.5">
                 {items ? `${items.length} items` : ""}
@@ -244,28 +188,10 @@ function MainContent({ selected, onSelect, query, setQuery, matchedIds }) {
               </button>
             )}
           </div>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-gray-400 hover:text-white hover:bg-white/[0.06] border border-white/[0.06] transition-all duration-150">
-            <SlidersHorizontal size={12} />
-            Filter
-          </button>
-          <div className="flex items-center bg-[#161b22] border border-white/[0.06] rounded-lg p-0.5">
-            <button
-              onClick={() => setView("list")}
-              className={`p-1.5 rounded-md transition-all duration-150 ${view === "list" ? "bg-white/10 text-white" : "text-gray-600 hover:text-gray-400"}`}
-            >
-              <List size={14} />
-            </button>
-            <button
-              onClick={() => setView("grid")}
-              className={`p-1.5 rounded-md transition-all duration-150 ${view === "grid" ? "bg-white/10 text-white" : "text-gray-600 hover:text-gray-400"}`}
-            >
-              <LayoutGrid size={14} />
-            </button>
-          </div>
         </div>
       </div>
 
-      {selected?.id === "nav-dashboard" && !query && <DashboardCards />}
+      {/* Dashboard cards removed to keep UI focused; nothing rendered here */}
 
       {path && items && items.length > 0 && (
         <div className="mb-4">
@@ -277,7 +203,7 @@ function MainContent({ selected, onSelect, query, setQuery, matchedIds }) {
       {isEmpty ? (
         <EmptyState
           title={query ? `No results for "${query}"` : selected ? `${selected.name} is empty` : "Nothing here"}
-          subtitle={query ? "Try a different search term" : "No files or folders to display"}
+          subtitle="No files or folders to display"
         />
       ) : (
         <FileTable items={items} onSelect={onSelect} selected={selected} />
@@ -287,27 +213,37 @@ function MainContent({ selected, onSelect, query, setQuery, matchedIds }) {
 }
 
 export default function App() {
-  const [selected, setSelected] = useState({ id: "nav-dashboard", name: "Dashboard", type: "nav" });
+  const [selected, setSelected] = useState({ id: "nav-allfiles", name: "All Files", type: "nav" });
+  const [showProperties, setShowProperties] = useState(true);
   const { query, setQuery, matchedIds, expandIds } = useSearch(tree);
+
+  const handleSelect = (item) => {
+    setSelected(item);
+    setQuery("");
+  };
+
+  const toggleProperties = () => setShowProperties((s) => !s);
 
   return (
     <div className="flex flex-col h-screen bg-[#0f1117] text-gray-100 overflow-hidden">
-      <Toolbar />
+      <Toolbar showProperties={showProperties} toggleProperties={toggleProperties} />
       <div className="flex flex-1 overflow-hidden">
         <FileExplorer
-          onSelect={setSelected}
+          onSelect={handleSelect}
           selected={selected}
           matchedIds={matchedIds}
           expandIds={expandIds}
         />
         <MainContent
           selected={selected}
-          onSelect={setSelected}
+          onSelect={handleSelect}
           query={query}
           setQuery={setQuery}
           matchedIds={matchedIds}
+          showProperties={showProperties}
+          toggleProperties={toggleProperties}
         />
-        <PropertiesPanel selected={selected} />
+        {showProperties && <PropertiesPanel selected={selected} />}
       </div>
     </div>
   );
