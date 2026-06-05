@@ -32,7 +32,7 @@ npm install
 npm run dev
 ```
 
-The app runs on `http://localhost:5174` by default.
+The app runs on `http://localhost:5173` by default.
 
 To build for production:
 
